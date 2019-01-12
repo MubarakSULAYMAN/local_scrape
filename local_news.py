@@ -89,8 +89,8 @@ def scrape_todayng():
     today_ng_news = []
     
     for container in containers:
-        headline = container.div.a["title"].getText().strip()
-        address = container.div.a["href"]
+        # headline = container.div.a["title"].getText().strip()
+        # address = container.div.a["href"]
         author = "today.ng"
         date = ""
         image = container.find(class_='td-module-thumb').a.img['src']
@@ -107,8 +107,8 @@ def scrape_todayng():
         # date = fetch_read_address.find(class_='td-post-date').getText().strip()
 
         row = {'source': str(source), 
-               'headline': str(headline),
-               'address': str(address),
+            #    'headline': str(headline),
+            #    'address': str(address),
                'author': str(author),
                'date': str(date),
                'image': str(image),

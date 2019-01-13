@@ -1,16 +1,10 @@
 from flask import Flask, json, jsonify, request
 
-from flask_cors from CORS
-
 import local_news
 
 from local_news import scrape_legit, scrape_kwaralefro, scrape_todayng, scrape_kwaragist, scrape_theinformant247,  scrape_fidelinfo, scrape_royalfm
 
 app = Flask(__name__)
-# CORS(app)
-# cors = CORS(app, resources ={r"/api/*" : {"origins" : "*"}})
-# cors = CORS(app)
-# app.config[ 'CORS_HEADERS' ] = 'Content-Type'
 
 @app.route('/')
 def  lost():
@@ -21,7 +15,6 @@ def  apis():
     return "Nothing here for you..."
 
 @app.route('/api/news')
-# @cross_origin()
 def newsIndex():
 
     data1 = scrape_legit()

@@ -1,10 +1,13 @@
 from flask import Flask, json, jsonify, request
 
+from flask_cors from CORS
+
 import local_news
 
 from local_news import scrape_legit, scrape_kwaralefro, scrape_todayng, scrape_kwaragist, scrape_theinformant247,  scrape_fidelinfo, scrape_royalfm
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def  lost():

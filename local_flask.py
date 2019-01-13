@@ -8,6 +8,7 @@ from local_news import scrape_legit, scrape_kwaralefro, scrape_todayng, scrape_k
 
 app = Flask(__name__)
 CORS(app)
+cors = CORS(app, resources ={r"/api/*" : {"origins" : "*"}})
 
 @app.route('/')
 def  lost():

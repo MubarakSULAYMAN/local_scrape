@@ -4,6 +4,7 @@ celery >= 4.2.1
 Flask >= 1.0.2
 Flask-API >= 1.1
 Flask-Celery-Helper >= 1.1.0
+Flask-Cors >= 3.0.7
 Flask-CORS >= 3.0.7
 Flask-RESTful >= 0.3.7
 gunicorn >= 19.9.0

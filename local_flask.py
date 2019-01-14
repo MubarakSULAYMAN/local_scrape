@@ -34,9 +34,10 @@ def newsIndex():
     # data = data1 + data2 + data3 + data4 + data5 + data6 + data7
 
     data = data1 + data3 + data4 + data6 
+    articles = "articles" + data
 
     response = app.response_class(
-        response=json.dumps(data),
+        response=json.dumps(articles),
         status=200,
         mimetype='application/json'
     )

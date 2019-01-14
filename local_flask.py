@@ -36,7 +36,7 @@ def newsIndex():
     data = data1 + data3 + data4 + data6 
 
     response = app.response_class(
-        response=json.dumps("articles: " + data),
+        response=json.dumps(data),
         status=200,
         mimetype='application/json'
     )

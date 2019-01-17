@@ -203,16 +203,16 @@ def scrape_fidelinfo():
     fidelinfo_news = []
 
     for container in containers:
-        headline = container.find_all_next(class_="post-title").getText().strip()
-        address = container.find_all_next(class_="post-title").a["href"]
-        author = container.find_all_next(class_="meta-author").getText().strip()
-        date = container.find_all_next(class_="date").getText().strip()
+        headline = container.findAll(class_="post-title").getText().strip()
+        address = container.findAll(class_="post-title").a["href"]
+        author = container.findAll(class_="meta-author").getText().strip()
+        date = container.findAll(class_="date").getText().strip()
         image = ""
 
-        fetch_read_address = container.find(class_="post-details").a["href"]
+        fetch_read_address = container.findAll(class_="post-details").a["href"]
         read_address = requests.get(fetch_read_address)
         page_soup = soup(read_address.content, "html.parser")
-        post = str(page_soup.body.find(class_="post"))
+        post = str(page_soup.body.findAll(class_="post"))
         cut_from = post.find("</header>")
         cut_to = post.find("<p>&nbsp;</p>")
         news_read = soup(post[cut_from+1:cut_to],"html.parser" )

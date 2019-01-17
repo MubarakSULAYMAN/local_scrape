@@ -204,9 +204,9 @@ def scrape_fidelinfo():
 
     for container in containers:
         headline = container.findAll(class_="post-title")
-        address = container.findAll(class_="post-title").a["href"]
+#         address = container.findAll(class_="post-title").a["href"]
         author = container.findAll(class_="meta-author")
-        date = container.findAll(class_="date").getText()
+#         date = container.findAll(class_="date").getText()
         image = ""
 
         fetch_read_address = container.findAll(class_="post-details").a["href"]
@@ -219,9 +219,9 @@ def scrape_fidelinfo():
 
         row = {'source': str(source), 
                'headline': str(headline),
-               'address': str(address),
+#                'address': str(address),
                'author': str(author),
-               'date': str(date),
+#                'date': str(date),
                'image': str(image),
                'news_read': str(news_read)
               }

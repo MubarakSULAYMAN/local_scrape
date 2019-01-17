@@ -203,10 +203,10 @@ def scrape_fidelinfo():
     fidelinfo_news = []
 
     for container in containers:
-        headline = container.find(class_="post-title").getText().strip()
-        address = container.find(class_="post-title").a["href"]
-        author = container.find(class_="meta-author").getText().strip()
-        date = container.find(class_="date").getText().strip()
+        headline = container.find_all_next(class_="post-title").getText().strip()
+        address = container.find_all_next(class_="post-title").a["href"]
+        author = container.find_all_next(class_="meta-author").getText().strip()
+        date = container.find_all_next(class_="date").getText().strip()
         image = ""
 
         fetch_read_address = container.find(class_="post-details").a["href"]

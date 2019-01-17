@@ -213,8 +213,8 @@ def scrape_fidelinfo():
         read_address = requests.get(fetch_read_address)
         page_soup = soup(read_address.content, "html.parser")
         post = str(page_soup.body.findAll(class_="post"))
-        cut_from = post.find("</header>")
-        cut_to = post.find("<p>&nbsp;</p>")
+        cut_from = post.findAll("</header>")
+        cut_to = post.findAll("<p>&nbsp;</p>")
         news_read = soup(post[cut_from+1:cut_to],"html.parser" )
 
         row = {'source': str(source), 

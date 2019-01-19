@@ -28,7 +28,7 @@ def scrape_legit():
         fetch_read_address = container.find(class_="c-article-card-no-border").a["href"]
         read_address = requests.get(fetch_read_address)
         page_soup = soup(read_address.content, "html.parser")
-        post = str(page_soup.body.find(class_="l-article__desktop-left"))
+        post = str(page_soup.body.find(class_="l-article__body"))
         cut_from = post.find('>')
         cut_to = post.find("<div id=")
         news_read = soup(post[cut_from+1:cut_to],"html.parser" )

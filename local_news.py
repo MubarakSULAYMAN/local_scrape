@@ -15,18 +15,22 @@ def scrape_legit():
     legit_news = []
     
     for container in containers:
-        headline = container.find(class_="c-article-card-no-border__headline-hover-inner").getText().strip()
-        address = container.find(class_="c-article-card-no-border").a["href"]
+        headline = container.find_all(class_="c-article-card-no-border__headline-hover-inner")
+        address = container.find_all(class_="c-article-card-no-border")
+        date = container.find_all(class_='c-article-info__time')
+        image = container.find_all(class_="c-article-card-no-border")
+#         headline = container.find(class_="c-article-card-no-border__headline-hover-inner").getText().strip()
+#         address = container.find(class_="c-article-card-no-border").a["href"]
         author = "Naij.com"
-        date = container.find(class_='c-article-info__time').getText().strip()
-        image = container.find(class_="c-article-card-no-border").a.img['src']
+#         date = container.find(class_='c-article-info__time').getText().strip()
+#         image = container.find(class_="c-article-card-no-border").a.img['src']
 
         fetch_read_address = container.find(class_="c-article-card-no-border").a["href"]
         read_address = requests.get(fetch_read_address)
         page_soup = soup(read_address.content, "html.parser")
-        post = str(page_soup.body.find(class_="c-article-info"))
+        post = str(page_soup.body.find(class_="l-article__desktop-left"))
         cut_from = post.find('>')
-        cut_to = post.find("<div class=")
+        cut_to = post.find("<div id=")
         news_read = soup(post[cut_from+1:cut_to],"html.parser" )
 
         row = {'source': str(source), 
@@ -192,42 +196,42 @@ def scrape_theinformant247():
         
     return theinformant247_news
     
-def scrape_fidelinfo():
-    news_url = "https://www.fidelinfo.com/category/news/"
-    source = "Fidel Info"
-    newsClient = requests.get(news_url)
-    page_html = newsClient.text
-    page_soup = soup(page_html, "html.parser")
-    containers = page_soup.findAll("div", {"class" : "mag-box-container"})
+# def scrape_fidelinfo():
+#     news_url = "https://www.fidelinfo.com/category/news/"
+#     source = "Fidel Info"
+#     newsClient = requests.get(news_url)
+#     page_html = newsClient.text
+#     page_soup = soup(page_html, "html.parser")
+#     containers = page_soup.findAll("div", {"class" : "mag-box-container"})
         
-    fidelinfo_news = []
+#     fidelinfo_news = []
 
-    for container in containers:
-        headline = container.findAll(class_="post-title")
-#         address = container.findAll(class_="post-title").a["href"]
-        author = container.findAll(class_="meta-author")
-#         date = container.findAll(class_="date").getText()
-        image = ""
+#     for container in containers:
+#         headline = container.findAll(class_="post-title")
+# #         address = container.findAll(class_="post-title").a["href"]
+#         author = container.findAll(class_="meta-author")
+# #         date = container.findAll(class_="date").getText()
+#         image = ""
 
-        fetch_read_address = container.findAll(class_="post-details").a["href"]
-        read_address = requests.get(fetch_read_address)
-        page_soup = soup(read_address.content, "html.parser")
-        post = str(page_soup.body.findAll(class_="post"))
-        cut_from = post.findAll("</header>")
-        cut_to = post.findAll("<p>&nbsp;</p>")
-        news_read = soup(post[cut_from+1:cut_to],"html.parser" )
+#         fetch_read_address = container.findAll(class_="post-details").a["href"]
+#         read_address = requests.get(fetch_read_address)
+#         page_soup = soup(read_address.content, "html.parser")
+#         post = str(page_soup.body.findAll(class_="post"))
+#         cut_from = post.findAll("</header>")
+#         cut_to = post.findAll("<p>&nbsp;</p>")
+#         news_read = soup(post[cut_from+1:cut_to],"html.parser" )
 
-        row = {'source': str(source), 
-               'headline': str(headline),
-#                'address': str(address),
-               'author': str(author),
-#                'date': str(date),
-               'image': str(image),
-               'news_read': str(news_read)
-              }
-        fidelinfo_news.append(row)
+#         row = {'source': str(source), 
+#                'headline': str(headline),
+# #                'address': str(address),
+#                'author': str(author),
+# #                'date': str(date),
+#                'image': str(image),
+#                'news_read': str(news_read)
+#               }
+#         fidelinfo_news.append(row)
         
-    return fidelinfo_news
+#     return fidelinfo_news
     
 def scrape_royalfm():
     news_url = "http://royalfm.net/category/news/local_news/"

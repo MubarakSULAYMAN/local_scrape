@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as soup
-import csv
-from csv import writer
+# import csv
+# from csv import writer
 
 # def scrape_legit():
 #     news_url = "https://www.legit.ng/tag/kwara-state-news-today.html"

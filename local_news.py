@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as soup
-import csv
-from csv import writer
+# import csv
+# from csv import writer
 
 def scrape_legit():
     news_url = "https://www.legit.ng/tag/kwara-state-news-today.html"
@@ -196,42 +196,67 @@ def scrape_theinformant247():
         
     return theinformant247_news
     
-# def scrape_fidelinfo():
-#     news_url = "https://www.fidelinfo.com/category/news/"
-#     source = "Fidel Info"
-#     newsClient = requests.get(news_url)
-#     page_html = newsClient.text
-#     page_soup = soup(page_html, "html.parser")
-#     containers = page_soup.findAll("div", {"class" : "mag-box-container"})
+def scrape_fidelinfo():
+    news_url = "https://www.fidelinfo.com/category/news/"
+    source = "Fidel Info"
+    newsClient = requests.get(news_url)
+    page_html = newsClient.text
+    page_soup = soup(page_html, "html.parser")
+    containers = page_soup.findAll("div", {"class" : "mag-box-container"})
         
-#     fidelinfo_news = []
+    fidelinfo_news = []
 
-#     for container in containers:
-#         headline = container.findAll(class_="post-title")
-# #         address = container.findAll(class_="post-title").a["href"]
-#         author = container.findAll(class_="meta-author")
-# #         date = container.findAll(class_="date").getText()
-#         image = ""
+    for container in containers:
+        x = container.find_all_next(class_="post-title")
+        for y in x:
+            headline = y
+            #print(headline)
+        #for x in container.find_all_next(class_="post-title"):
+         #   headline = x.getText().strip()
+        #address = container.find("a", {class_="post-title"}).a["href"]
+        x = container.find_all(class_="post-title")
+        for y in x:
+            address = y.a["href"]
+            #print(address)
+        #address = container.find(class_="post-title").a["href"]
+        x = container.find_all(class_="meta-author")
+        for y in x:
+            author = y.getText().strip()
+            #print(author)
+        x = container.find_all(class_="date")
+        for y in x:
+            date = y.getText().strip()
+            #print(date)
+        x = container.find_all(class_="post-thumb")
+        for y in x:
+            image = y.img["src"]
+            #print(image)
+        # news_snip = container.find(class_="post-title").a["href"]
 
-#         fetch_read_address = container.findAll(class_="post-details").a["href"]
-#         read_address = requests.get(fetch_read_address)
-#         page_soup = soup(read_address.content, "html.parser")
-#         post = str(page_soup.body.findAll(class_="post"))
-#         cut_from = post.findAll("</header>")
-#         cut_to = post.findAll("<p>&nbsp;</p>")
-#         news_read = soup(post[cut_from+1:cut_to],"html.parser" )
+        x = container.find_all(class_="post-item")
+        for y in x:
+            fetch_address = y.a["href"]
+            #print(fetch_address)
+            read_address = requests.get(fetch_read_address)
+            #print(read_address)
+            page_soup = soup(read_address.content, "html.parser")
+            post = str(page_soup.body.find_all(class_="post"))
+            print(post)
+            cut_from = post.find("</header>")
+            cut_to = post.find("<p>&nbsp;</p>")
+            news_read = soup(post[cut_from+1:cut_to],"html.parser" )
 
-#         row = {'source': str(source), 
-#                'headline': str(headline),
-# #                'address': str(address),
-#                'author': str(author),
-# #                'date': str(date),
-#                'image': str(image),
-#                'news_read': str(news_read)
-#               }
-#         fidelinfo_news.append(row)
-        
-#     return fidelinfo_news
+            row = {'source': str(source), 
+                   'headline': str(headline),
+                   'address': str(address),
+                   'author': str(author),
+                   'date': str(date),
+                   'image': str(image),
+                   'news_read': str(news_read)
+                  }
+            fidelinfo_news.append(row)
+
+        return fidelinfo_news
     
 def scrape_royalfm():
     news_url = "http://royalfm.net/category/news/local_news/"

@@ -246,17 +246,17 @@ def scrape_fidelinfo():
             cut_to = post.find("<p>&nbsp;</p>")
             news_read = soup(post[cut_from+1:cut_to],"html.parser" )
 
-            row = {'source': str(source), 
-                   'headline': str(headline),
-                   'address': str(address),
-                   'author': str(author),
-                   'date': str(date),
-                   'image': str(image),
-                   'news_read': str(news_read)
-                  }
-            fidelinfo_news.append(row)
+        row = {'source': str(source), 
+               'headline': str(headline),
+               'address': str(address),
+               'author': str(author),
+               'date': str(date),
+               'image': str(image),
+               'news_read': str(news_read)
+              }
+        fidelinfo_news.append(row)
 
-        return fidelinfo_news
+    return fidelinfo_news
     
 # def scrape_royalfm():
 #     news_url = "http://royalfm.net/category/news/local_news/"

@@ -257,7 +257,7 @@ def scrape_fidelinfo():
         fidelinfo_news.append(row)
 
     return fidelinfo_news
-    
+
 # def scrape_royalfm():
 #     news_url = "http://royalfm.net/category/news/local_news/"
 #     source = "Royal fm - 95.1 MHz"

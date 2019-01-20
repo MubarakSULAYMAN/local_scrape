@@ -3,47 +3,72 @@ from bs4 import BeautifulSoup as soup
 # import csv
 # from csv import writer
 
-# def scrape_legit():
-#     news_url = "https://www.legit.ng/tag/kwara-state-news-today.html"
-#     source = "Naij.com"
-#     newsClient = requests.get(news_url)
-#     page_html = newsClient.text
-#     newsClient.close()
-#     page_soup = soup(page_html, "html.parser")
-#     containers = page_soup.findAll("div", {"class" : "l-taxonomy-page-hero__list"})
+def scrape_legit():
+    news_url = "https://www.legit.ng/tag/kwara-state-news-today.html"
+    source = "Naij.com"
+    newsClient = requests.get(news_url)
+    page_html = newsClient.text
+    #newsClient.close()
+    page_soup = soup(page_html, "html.parser")
+    containers = page_soup.findAll("div", {"class" : "l-taxonomy-page-hero__list"})
     
-#     legit_news = []
+    legit_news = []
     
-#     for container in containers:
-#         headline = container.find_all(class_="c-article-card-no-border__headline-hover-inner")
-#         address = container.find_all(class_="c-article-card-no-border")
-#         date = container.find_all(class_='c-article-info__time')
-#         image = container.find_all(class_="c-article-card-no-border")
-# #         headline = container.find(class_="c-article-card-no-border__headline-hover-inner").getText().strip()
-# #         address = container.find(class_="c-article-card-no-border").a["href"]
-#         author = "Naij.com"
-# #         date = container.find(class_='c-article-info__time').getText().strip()
-# #         image = container.find(class_="c-article-card-no-border").a.img['src']
+    for container in containers:
+        x = container.find_all(class_="c-article-card-no-border__headline-hover-inner")
+        for y in x:
+            headline = y.getText().strip()
+            #print(headline)
+        x = container.find_all(class_="c-article-card-no-border")
+        for y in x:
+            address = y.a["href"]
+            #print(address)
+        x = container.find_all(class_='c-article-info__time')
+        for y in x:
+            date = y.getText().strip()
+            #print(date)
+        x = container.find_all(class_="c-article-card-no-border")
+        for y in x:
+            image = y.a.img['src']
+            #print(image)
+    #         news_snip = container.find(class_="tmpost-desc").get_text()
+    
+        x = container.find_all(class_="c-article-card-no-border")
+        for y in x:
+            fetch_read_address = y.a["href"]
+            #print(fetch_read_address)
+            read_address = requests.get(fetch_read_address)
+            #print(read_address)
+        
+            newspage = page_soup.body.find(class_="c-article-info")
+            x = newspage.find_all(class_='c-article-info__author')
+            for y in x:
+                author = y.getText().strip()
+                #print(author)
+            
+            page_soup = soup(read_address.content, "html.parser")
+            #print(page_soup)
+            x = page_soup.body.find_all(class_="l-article__body c-article__body")
+            for y in x:
+                post = str(y)
+                #print(post)
+                cut_from = post.find('>')
+                cut_to = post.find("<div class=")
+                news_read = soup(post[cut_from+1:cut_to],"html.parser")
+                print(news_read)
 
-#         fetch_read_address = container.find(class_="c-article-card-no-border").a["href"]
-#         read_address = requests.get(fetch_read_address)
-#         page_soup = soup(read_address.content, "html.parser")
-#         post = str(page_soup.body.find(class_="l-article__body"))
-#         cut_from = post.find('>')
-#         cut_to = post.find("<div id=")
-#         news_read = soup(post[cut_from+1:cut_to],"html.parser" )
+        row = {'source': str(source), 
+               'headline': str(headline),
+               'address': str(address),
+               'author': str(author),
+               'date': str(date),
+               'image': str(image),
+                'new_snip': str(news_snip),
+               'news_read': str(news_read)
+              }
+        legit_news.append(row)
 
-#         row = {'source': str(source), 
-#                'headline': str(headline),
-#                'address': str(address),
-#                'author': str(author),
-#                'date': str(date),
-#                'image': str(image),
-#                'news_read': str(news_read)
-#               }
-#         legit_news.append(row)
-
-#     return legit_news
+    return legit_news
 
 # def scrape_kwaralefro():
 #     news_url = "http://www.kwaralefro.com"
@@ -235,12 +260,17 @@ def scrape_fidelinfo():
             #print(fetch_address)
             read_address = requests.get(fetch_read_address)
             #print(read_address)
+
             page_soup = soup(read_address.content, "html.parser")
-            post = str(page_soup.body.find_all(class_="post"))
-            print(post)
-            cut_from = post.find("</header>")
-            cut_to = post.find("<p>&nbsp;</p>")
-            news_read = soup(post[cut_from+1:cut_to],"html.parser" )
+            #print(page_soup)
+            x = page_soup.body.find_all(class_="post")
+            for y in x:
+                post = str(y)
+                #print(post)
+                cut_from = post.find("</header>")
+                cut_to = post.find("<p>&nbsp;</p>")
+                news_read = soup(post[cut_from+1:cut_to],"html.parser" )
+                print(news_read)
 
         row = {'source': str(source), 
                'headline': str(headline),

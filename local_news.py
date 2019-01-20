@@ -232,7 +232,7 @@ def scrape_fidelinfo():
 
         x = container.find_all(class_="post-item")
         for y in x:
-            fetch_address = y.a["href"]
+            fetch_read_address = y.a["href"]
             #print(fetch_address)
             read_address = requests.get(fetch_read_address)
             #print(read_address)

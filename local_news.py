@@ -1,8 +1,6 @@
 import requests
-from bs4
-import BeautifulSoup as soup
-#import csv
-# from csv import writer
+from bs4 import BeautifulSoup as soup
+
 
 def scrape_legit():
     news_url = "https://www.legit.ng/tag/kwara-state-news-today.html"
@@ -70,7 +68,7 @@ def scrape_legit():
                     'author': str(author),
                     'date': str(date),
                     'image': str(image),
-                    'new_snip': str(news_snip),
+                    # 'new_snip': str(news_snip),
                     'news_read': str(news_read)
                 }
                 legit_news.append(row)
@@ -78,13 +76,13 @@ def scrape_legit():
         return legit_news
 
 # def scrape_kwaralefro(): #news_url = "http://www.kwaralefro.com"
-#source = "Kwara Legacy Frontier"
-#newsClient = requests.get(news_url)# page_html = newsClient.text# page_soup = soup(page_html, "html.parser")
+# source = "Kwara Legacy Frontier"
+# newsClient = requests.get(news_url)# page_html = newsClient.text# page_soup = soup(page_html, "html.parser")
 # containers = page_soup.findAll("div", {"class": "container-wrapper"})
 
 # kwaralefro_news = []
 
-#for container in containers: #headline = container.div.p.getText().strip()# address = container.h1.a["href"]
+# for container in containers: #headline = container.div.p.getText().strip()# address = container.h1.a["href"]
 # author = container.find(class_ = "author").getText().strip()
 # date = container.find(class_ = "entry-date").getText().strip()
 # image = container.find(class_ = "content-excerpt").a.img["src"]
@@ -96,17 +94,18 @@ def scrape_legit():
 # news_read = soup(post[cut_from + 1: cut_to], "html.parser")
 
 # row = {
-  #'source': str(source),
-  #'headline': str(headline),
-  #'address': str(address),
-  #'author': str(author),
-  #'date': str(date),
-  #'image': str(image),
-  #'news_read': str(news_read)
-  #}
-#kwaralefro_news.append(row)
+  # 'source': str(source),
+  # 'headline': str(headline),
+  # 'address': str(address),
+  # 'author': str(author),
+  # 'date': str(date),
+  # 'image': str(image),
+  # 'news_read': str(news_read)
+  # }
+# kwaralefro_news.append(row)
 
-#return kwaralefro_news
+# return kwaralefro_news
+
 
 def scrape_todayng():
     news_url = "https://www.today.ng/topic/kwara"
@@ -170,12 +169,13 @@ def scrape_todayng():
                     'author': str(author),
                     'date': str(date),
                     'image': str(image),
-                    'new_snip': str(news_snip),
+                    # 'new_snip': str(news_snip),
                     'news_read': str(news_read)
                 }
                 today_ng_news.append(row)
 
     return today_ng_news
+
 
 def scrape_kwaragist():
     news_url = "https://kwaragist.com"
@@ -234,27 +234,27 @@ def scrape_kwaragist():
                 'author': str(author),
                 'date': str(date),
                 'image': str(image),
-                'new_snip': str(news_snip),
+                # 'new_snip': str(news_snip),
                 'news_read': str(news_read)
             }
             kwaragist_news.append(row)
 
     return kwaragist_news
 
-# def scrape_theinformant247(): 
-#news_url = "http://www.theinformant247.com"
-#source = "Informant 247"
-#newsClient = requests.get(news_url)
+# def scrape_theinformant247():
+# news_url = "http://www.theinformant247.com"
+# source = "Informant 247"
+# newsClient = requests.get(news_url)
 # page_html = newsClient.text
 # newsClient.close()# page_soup = soup(page_html, "html.parser")
 # containers = page_soup.findAll("div", {"class": "container-wrapper"})
 
 # theinformant247_news = []
 
-#for container in containers: #headline = container.div.a["title"]
+# for container in containers: #headline = container.div.a["title"]
 # address = container.div.a["href"]
 # author = "The Informant247"
-#date = container.find(class_ = "time").getText().strip()
+# date = container.find(class_ = "time").getText().strip()
 # image = container.find(class_ = "attachment-jannah-image-large size-jannah-image-large wp-post-image").a.img['src']
 # fetch_read_address = container.find(class_ = "post-details").a["href"]
 # read_address = requests.get(fetch_read_address)
@@ -263,18 +263,19 @@ def scrape_kwaragist():
 # cut_from = post.find('</div>')# cut_to = post.find("<div")
 # news_read = soup(post[cut_from + 1: cut_to], "html.parser")
 
-# row = {
-  #'source': str(source),
-  #'headline': str(headline),
-  #'address': str(address),
-  #'author': str(author),
-  #'date': str(date),
-  #'image': str(image),
-  #'news_read': str(news_read)#
-}
-#theinformant247_news.append(row)
 
-#return theinformant247_news
+# row = {
+  # 'source': str(source),
+  # 'headline': str(headline),
+  # 'address': str(address),
+  # 'author': str(author),
+  # 'date': str(date),
+  # 'image': str(image),
+  #'news_read': str(news_read)#
+# }
+# theinformant247_news.append(row)
+
+# return theinformant247_news
 
 def scrape_fidelinfo():
     news_url = "https://www.fidelinfo.com/category/news/"
@@ -333,10 +334,10 @@ def scrape_fidelinfo():
 
     return fidelinfo_news
 
-# def scrape_royalfm(): 
-#news_url = "http://royalfm.net/category/news/local_news/"
-#source = "Royal fm - 95.1 MHz"
-#newsClient = requests.get(news_url)
+# def scrape_royalfm():
+# news_url = "http://royalfm.net/category/news/local_news/"
+# source = "Royal fm - 95.1 MHz"
+# newsClient = requests.get(news_url)
 # page_html = newsClient.text
 # newsClient.close()
 # page_soup = soup(page_html, "html.parser")
@@ -344,8 +345,8 @@ def scrape_fidelinfo():
 
 # royal_news = []
 
-#for container in containers: 
-#headline = container.div.a["title"]
+# for container in containers:
+# headline = container.div.a["title"]
 # address = container.div.a["href"]
 # author = container.find(class_ = 'tm_catpost_item_1').getText().strip()
 # date = container.find(class_ = 'tm_catpost_item_3').getText().strip()
@@ -354,14 +355,14 @@ def scrape_fidelinfo():
 # fetch_read_address = container.find(class_ = 'tmpost-readmore').a['href']# read_address = requests.get(fetch_read_address)# page_soup = soup(read_address.content, "html.parser")# post = str(page_soup.body.find(class_ = "post"))# cut_from = post.find('>')# cut_to = post.find('<!-- Facebook Comm')# news_read = soup(post[cut_from + 1: cut_to], "html.parser")
 
 # row = {
-  #'source': str(source),
-  #'headline': str(headline),
-  #'address': str(address),
-  #'author': str(author),
-  #'date': str(date),
-  #'image': str(image),
+  # 'source': str(source),
+  # 'headline': str(headline),
+  # 'address': str(address),
+  # 'author': str(author),
+  # 'date': str(date),
+  # 'image': str(image),
   #'news_read': str(news_read)#
-#}
-#royal_news.append(row)
+# }
+# royal_news.append(row)
 
-#return royal_news
+# return royal_news

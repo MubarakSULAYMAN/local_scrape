@@ -215,7 +215,6 @@ def scrape_fidelinfo():
         for y in x:
             address = y.a["href"]
             #print(address)
-        #address = container.find(class_="post-title").a["href"]
         x = container.find_all(class_="meta-author")
         for y in x:
             author = y.getText().strip()

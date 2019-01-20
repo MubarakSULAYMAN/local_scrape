@@ -21,12 +21,12 @@ def  apis():
 @cross_origin()
 def newsIndex():
 
-    data1 = scrape_legit()
+#     data1 = scrape_legit()
     # data2 = scrape_kwaralefro()
 #     data3 = scrape_todayng()
 #     data4= scrape_kwaragist()
     # data5 = scrape_theinformant247()
-#     data6 = scrape_fidelinfo()
+    data6 = scrape_fidelinfo()
 
     # removed due to old news
     # data7 = scrape_royalfm()
@@ -35,7 +35,7 @@ def newsIndex():
 
 #     data = data1 + data3 + data4 + data6 
 
-    data = data1
+    data = data6
 
     response = app.response_class(
         response=json.dumps(data),

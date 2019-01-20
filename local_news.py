@@ -209,11 +209,8 @@ def scrape_fidelinfo():
     for container in containers:
         x = container.find_all_next(class_="post-title")
         for y in x:
-            headline = y
+            headline = y.getText().strip()
             #print(headline)
-        #for x in container.find_all_next(class_="post-title"):
-         #   headline = x.getText().strip()
-        #address = container.find("a", {class_="post-title"}).a["href"]
         x = container.find_all(class_="post-title")
         for y in x:
             address = y.a["href"]

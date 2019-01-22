@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup as soup
 
 def scrape_legit():
     news_url = "https://www.legit.ng/tag/kwara-state-news-today.html"
-    source = "Naij.com"
+    source = "Naij.com > Legit.ng"
     newsClient = requests.get(news_url)
     page_html = newsClient.text
     # newsClient.close()
@@ -44,11 +44,13 @@ def scrape_legit():
             page_soup = soup(read_address.content, "html.parser")
             # print(page_soup)
 
-            newspage = page_soup.body.find_all(class_="c-article-info")
-            x = newspage.find_all(class_='c-article-info__author')
-            for y in x:
-                author = y.getText().strip()
+            # newspage = page_soup.body.find_all(class_="c-article-info")
+            # print(newspage)
+            # x = newspage.find_all(class_='c-article-info__author')
+            # for y in x:
+            #     author = y.getText().strip()
                 # print(author)
+            author = "legit.ng"
 
             page_soup = soup(read_address.content, "html.parser")
             # print(page_soup)
@@ -131,7 +133,7 @@ def scrape_todayng():
             image = y.a.img['src']
             # print(image)
             # news_snip = container.find(class_ = "tmpost-desc").get_text()
-        author = ""
+        author = "today.ng"
         date = ""
 
         x = container.find_all(class_="item-details")

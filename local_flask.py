@@ -1,7 +1,8 @@
 from flask import Flask, json, jsonify, request
 from flask_cors import CORS, cross_origin
 import local_news
-from local_news import scrape_legit, scrape_kwaralefro, scrape_todayng, scrape_kwaragist, scrape_theinformant247,  scrape_fidelinfo, scrape_royalfm
+from local_news import scrape_legit, scrape_todayng, scrape_kwaragist,  scrape_fidelinfo
+# from local_news import scrape_legit, scrape_kwaralefro, scrape_todayng, scrape_kwaragist, scrape_theinformant247,  scrape_fidelinfo, scrape_royalfm
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -21,10 +22,10 @@ def  apis():
 @cross_origin()
 def newsIndex():
 
-#     data1 = scrape_legit()
+    data1 = scrape_legit()
 #     data2 = scrape_kwaralefro()
-#     data3 = scrape_todayng()
-#     data4= scrape_kwaragist()
+    data3 = scrape_todayng()
+    data4= scrape_kwaragist()
 #     data5 = scrape_theinformant247()
     data6 = scrape_fidelinfo()
 
@@ -32,7 +33,7 @@ def newsIndex():
     # data7 = scrape_royalfm()
     
 #     data = data1 + data2 + data3 + data4 + data5 + data6 + data7
-    data = data6
+    data = data1 + data3 + data4 + data6
 
     response = app.response_class(
         response=json.dumps(data),

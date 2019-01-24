@@ -1,112 +1,81 @@
 import requests
 from bs4 import BeautifulSoup as soup
 
-
 def scrape_legit():
+
     news_url = "https://www.legit.ng/tag/kwara-state-news-today.html"
-    source = "Naij.com > Legit.ng"
+    source = "Naij.com > Legit.ng" 
     newsClient = requests.get(news_url)
     page_html = newsClient.text
-    # newsClient.close()
     page_soup = soup(page_html, "html.parser")
-    containers = page_soup.findAll(
-        "div", {"class": "l-taxonomy-page-hero__list"})
+    containers = page_soup.find_all("article", {"class" : "c-article-card-no-border"})
 
     legit_news = []
 
     for container in containers:
-        x = container.find_all(
-            class_="c-article-card-no-border__headline-hover-inner")
-        for y in x:
-            headline = y.getText().strip()
-            # print(headline)
-        x = container.find_all(class_="c-article-card-no-border")
-        for y in x:
-            address = y.a["href"]
-            # print(address)
-        x = container.find_all(class_='c-article-info__time')
-        for y in x:
-            date = y.getText().strip()
-            # print(date)
-        x = container.find_all(class_="c-article-card-no-border")
-        for y in x:
-            image = y.a.img['src']
-            # print(image)
-            # news_snip = container.find(class_ = "tmpost-desc").get_text()
+        headline = container.span.getText().strip()
+        date = container.div.time.getText().strip()
+        image = container.a.picture.img["data-src"]
+        address = container.a["href"]
+        read_address = requests.get(address)
+        page_html = read_address.text
+        page_soup = soup(page_html, "html.parser")
+        # page_soup = soup(read_address.content, "html.parser")
+        author = str(page_soup.body.find(class_="c-article-info__author").getText().strip())
+        post = str(page_soup.body.find(class_="l-article__body c-article__body"))
+            
+        # cut_from = post.find(">")
+        # cut_to = post.find("<div class=")
+        # news_read = soup(post[cut_from+1:cut_to],"html.parser")
+        news_read = soup(post, "html.parser")
+          
+        row = {"source": str(source),
+            "headline": str(headline),
+            "address": str(address),
+            "date": str(date),
+            "image": str(image),
+            "author": str(author),
+            "news_read": str(news_read)
+            }
+        legit_news.append(row)
+                
+    return legit_news
 
-        x = container.find_all(class_="c-article-card-no-border")
-        for y in x:
-            fetch_read_address = y.a["href"]
-            # print(fetch_read_address)
-            read_address = requests.get(fetch_read_address)
-            # print(read_address)
 
-            page_soup = soup(read_address.content, "html.parser")
-            # print(page_soup)
+def scrape_kwaralefro():
+    news_url = "http://www.kwaralefro.com"
+    source = "Kwara Legacy Frontier"
+    newsClient = requests.get(news_url)
+    page_html = newsClient.text
+    page_soup = soup(page_html, "html.parser")
+    containers = page_soup.find_all("div", {"class": "content-excerpt"})
 
-            # newspage = page_soup.body.find_all(class_="c-article-info")
-            # print(newspage)
-            # x = newspage.find_all(class_='c-article-info__author')
-            # for y in x:
-            #     author = y.getText().strip()
-                # print(author)
-            author = "legit.ng"
+    kwaralefro_news = []
 
-            page_soup = soup(read_address.content, "html.parser")
-            # print(page_soup)
-            x = page_soup.body.find_all(
-                class_="l-article__body c-article__body")
-            for y in x:
-                post = str(y)  # print(post)
-                cut_from = post.find('>')
-                cut_to = post.find("<div class=")
-                news_read = soup(post[cut_from + 1: cut_to], "html.parser")
-                print(news_read)
+    for container in containers:
+        headline = container.h1.a.getText().strip()
+        date = container.div.span.a.time.getText().strip()
+        image = container.a.img["src"]
+        address = container.div.p.a["href"]
+        read_address = requests.get(address)
+        page_html = read_address.text
+        page_soup = soup(page_html, "html.parser")
+        author = container.span.span.a.getText().strip()
+        post = str(page_soup.body.find(class_="entry clearfix"))
+        news_read = soup(post, "html.parser")
 
-                row = {
-                    'source': str(source),
-                    'headline': str(headline),
-                    'address': str(address),
-                    'author': str(author),
-                    'date': str(date),
-                    'image': str(image),
-                    # 'new_snip': str(news_snip),
-                    'news_read': str(news_read)
-                }
-                legit_news.append(row)
+        row = {
+        "source": str(source),
+        "headline": str(headline),
+        "address": str(address),
+        "author": str(author),
+        "date": str(date),
+        "image": str(image),
+        "news_read": str(news_read)
+        }
+        kwaralefro_news.append(row)
 
-        return legit_news
-
-# def scrape_kwaralefro(): #news_url = "http://www.kwaralefro.com"
-# source = "Kwara Legacy Frontier"
-# newsClient = requests.get(news_url)# page_html = newsClient.text# page_soup = soup(page_html, "html.parser")
-# containers = page_soup.findAll("div", {"class": "container-wrapper"})
-
-# kwaralefro_news = []
-
-# for container in containers: #headline = container.div.p.getText().strip()# address = container.h1.a["href"]
-# author = container.find(class_ = "author").getText().strip()
-# date = container.find(class_ = "entry-date").getText().strip()
-# image = container.find(class_ = "content-excerpt").a.img["src"]
-
-# fetch_read_address = container.find(class_ = "entry").a['href']
-# read_address = requests.get(fetch_read_address)# page_soup = soup(read_address.content, "html.parser")
-# post = str(page_soup.body.find(class_ = "post"))# cut_from = post.find('>')
-# cut_to = post.find('<div class=')
-# news_read = soup(post[cut_from + 1: cut_to], "html.parser")
-
-# row = {
-  # 'source': str(source),
-  # 'headline': str(headline),
-  # 'address': str(address),
-  # 'author': str(author),
-  # 'date': str(date),
-  # 'image': str(image),
-  # 'news_read': str(news_read)
-  # }
-# kwaralefro_news.append(row)
-
-# return kwaralefro_news
+    return kwaralefro_news
 
 
 def scrape_todayng():
@@ -115,66 +84,35 @@ def scrape_todayng():
     newsClient = requests.get(news_url)
     page_html = newsClient.text
     page_soup = soup(page_html, "html.parser")
-    containers = page_soup.find_all("div", {"class": "td-ss-main-content"})
+    containers = page_soup.find_all("div", {"class": "td_module_11"})
 
     today_ng_news = []
-
     for container in containers:
-        x = container.find_all(class_="td_module_11")
-        for y in x:
-            headline = y.getText().strip()
-            # print(headline)
-        x = container.find_all(class_="item-details")
-        for y in x:
-            address = y.a["href"]
-            # print(address)
-        x = container.find_all(class_='td-module-thumb')
-        for y in x:
-            image = y.a.img['src']
-            # print(image)
-            # news_snip = container.find(class_ = "tmpost-desc").get_text()
-        author = "today.ng"
-        date = ""
+        headline = container.find(class_="entry-title td-module-title").getText().strip()
+        image = container.div.a.img["src"]
+        address = container.div.a["href"]
+        read_address = requests.get(address)
+        page_html = read_address.text
+        page_soup = soup(page_html, "html.parser")
+        date = str(page_soup.body.find(class_="entry-date updated td-module-date").getText().strip())
+        author = str(page_soup.body.find(class_="td-post-author-name").getText().strip())
+        post = str(page_soup.body.find(class_="td-post-content"))
 
-        x = container.find_all(class_="item-details")
-        for y in x:
-            fetch_read_address = y.a["href"]
-            # print(fetch_read_address)
-            read_address = requests.get(fetch_read_address)
-            # print(read_address)
+        # cut_from = post.find("</div>")
+        # cut_to = post.find("<div style=")
+        # news_read = soup(post[cut_from+1:cut_to],"html.parser")
+        news_read = soup(post, "html.parser")
 
-            page_soup = soup(read_address.content, "html.parser")
-            # print(page_soup)
-
-            x = page_soup.body.find_all(class_="td-post-content")
-            for y in x:
-                post = str(y)
-                # print(post)
-                cut_from = post.find("/div>")
-                cut_to = post.find("<a href=")
-                news_read = soup(post[cut_from + 1: cut_to], "html.parser")
-                # print(news_read)
-
-                # newspage = page_soup.body.find_all(class_ = "td-container")
-                # x = newspage.find_all(class_ = "td-post-author-name")
-                # for y in x: #author = y.getText().strip()# print(author)
-
-                # newspage = page_soup.body.find_all(class_ = "td-container")
-                # x = fetch_read_address.find(class_ = 'td-post-date')
-                # for y in x: #date = y.getText().strip()
-                # print(date)
-
-                row = {
-                    'source': str(source),
-                    'headline': str(headline),
-                    'address': str(address),
-                    'author': str(author),
-                    'date': str(date),
-                    'image': str(image),
-                    # 'new_snip': str(news_snip),
-                    'news_read': str(news_read)
-                }
-                today_ng_news.append(row)
+        row = {
+            "source": str(source),
+            "headline": str(headline),
+            "address": str(address),
+            "author": str(author),
+            "date": str(date),
+            "image": str(image),
+            "news_read": str(news_read)
+        }
+        today_ng_news.append(row)
 
     return today_ng_news
 
@@ -184,100 +122,80 @@ def scrape_kwaragist():
     source = "Kwara Gist"
     newsClient = requests.get(news_url)
     page_html = newsClient.text
-    # newsClient.close()
     page_soup = soup(page_html, "html.parser")
-    containers = page_soup.findAll("div", {"id": "mvp-home-body"})
+    containers = page_soup.find_all("li", {"class": "infinite-post"})
 
     kwaragist_news = []
 
     for container in containers:
-        x = container.find_all(class_="mvp-main-blog-text")
-        for y in x:
-            headline = y.a.getText().strip()
-            # print(headline)
-        x = container.find_all(class_="mvp-main-blog-out")
-        for y in x:
-            address = y.a["href"]
-            # print(address)
-        x = container.find_all(class_="mvp-blog-author")
-        for y in x:
-            author = y.getText().strip()
-            # print(author)
-        x = container.find_all(class_="mvp-blog-date")
-        for y in x:
-            date = y.getText().strip()
-            # print(date)
-        x = container.find_all(class_="mvp-main-blog-img")
-        for y in x:
-            image = y.img['src']
-            # print(image)
-        # news_snip = container.find(class_ = "tmpost-desc").get_text()
-        x = container.find_all(class_="mvp-main-blog-text")
-        for y in x:
-            fetch_read_address = y.a["href"]
-            # print(fetch_read_address)
+        headline = container.find(class_="mvp-main-blog-text left relative").a.getText().strip()
+        image = container.div.a.div.img["src"]
+        author = container.find(class_="mvp-blog-author").getText().strip()
+        date = container.find(class_="mvp-blog-date").getText().strip()
+        address = container.div.a["href"]
+        read_address = requests.get(address)
+        page_html = read_address.text
+        page_soup = soup(page_html, "html.parser")
+        post = str(page_soup.body.find(class_="theiaPostSlider_preloadedSlide"))
 
-        read_address = requests.get(fetch_read_address)
+        # cut_from = post.find("</div>")
+        # cut_to = post.find("<div class=")
+        # news_read = soup(post[cut_from+1:cut_to],"html.parser")
+        news_read = soup(post, "html.parser")
 
-        page_soup = soup(read_address.content, "html.parser")
-        # print(page_soup)
-        x = page_soup.body.find_all(class_="theiaPostSlider_slides")
-        for y in x:
-            post = str(y)
-            print(post)
-            cut_from = post.find('<p>&nbsp;</p>')
-            cut_to = post.find("<span")
-            news_read = soup(post[cut_from + 1: cut_to], "html.parser")
-
-            row = {
-                'source': str(source),
-                'headline': str(headline),
-                'address': str(address),
-                'author': str(author),
-                'date': str(date),
-                'image': str(image),
-                # 'new_snip': str(news_snip),
-                'news_read': str(news_read)
-            }
-            kwaragist_news.append(row)
+        row = {
+            "source": str(source),
+            "headline": str(headline),
+            "address": str(address),
+            "author": str(author),
+            "date": str(date),
+            "image": str(image),
+            "news_read": str(news_read)
+        }
+        kwaragist_news.append(row)
 
     return kwaragist_news
 
-# def scrape_theinformant247():
-# news_url = "http://www.theinformant247.com"
-# source = "Informant 247"
-# newsClient = requests.get(news_url)
-# page_html = newsClient.text
-# newsClient.close()# page_soup = soup(page_html, "html.parser")
-# containers = page_soup.findAll("div", {"class": "container-wrapper"})
 
-# theinformant247_news = []
+def scrape_theinformant247():
+    news_url = "http://www.theinformant247.com"
+    source = "Informant 247"
+    newsClient = requests.get(news_url)
+    page_html = newsClient.text
+    page_soup = soup(page_html, "html.parser")
+    containers = page_soup.find_all("li", {"class": "post-item"})
 
-# for container in containers: #headline = container.div.a["title"]
-# address = container.div.a["href"]
-# author = "The Informant247"
-# date = container.find(class_ = "time").getText().strip()
-# image = container.find(class_ = "attachment-jannah-image-large size-jannah-image-large wp-post-image").a.img['src']
-# fetch_read_address = container.find(class_ = "post-details").a["href"]
-# read_address = requests.get(fetch_read_address)
-# page_soup = soup(read_address.content, "html.parser")
-# post = str(page_soup.body.find(class_ = "entry-content"))
-# cut_from = post.find('</div>')# cut_to = post.find("<div")
-# news_read = soup(post[cut_from + 1: cut_to], "html.parser")
+    theinformant247_news = []
 
+    for container in containers:
+        headline = container.find(class_="post-title").a.getText().strip()
+        address = container.a["href"]
+        read_address = requests.get(address)
+        page_html = read_address.text
+        page_soup = soup(page_html, "html.parser")
+        author = str(page_soup.body.find(class_="entry-sub-title"))
+        date = str(page_soup.body.find(class_="date meta-item"))
+        image = str(page_soup.body.find(class_="entry-content entry clearfix"))
+        post = str(page_soup.body.find(class_="entry-content entry clearfix"))
 
-# row = {
-  # 'source': str(source),
-  # 'headline': str(headline),
-  # 'address': str(address),
-  # 'author': str(author),
-  # 'date': str(date),
-  # 'image': str(image),
-  #'news_read': str(news_read)#
-# }
-# theinformant247_news.append(row)
+        # cut_from = post.find("</div>")
+        # cut_to = post.find("<div class=")
+        # news_read = soup(post[cut_from+1:cut_to],"html.parser")
+        news_read = soup(post, "html.parser")
 
-# return theinformant247_news
+        row = {
+        "source": str(source),
+        "headline": str(headline),
+        "address": str(address),
+        "author": str(author),
+        "date": str(date),
+        "image": str(image),
+        "news_read": str(news_read)
+        }
+        theinformant247_news.append(row)
+
+    return theinformant247_news
+
 
 def scrape_fidelinfo():
     news_url = "https://www.fidelinfo.com/category/news/"
@@ -285,56 +203,79 @@ def scrape_fidelinfo():
     newsClient = requests.get(news_url)
     page_html = newsClient.text
     page_soup = soup(page_html, "html.parser")
-    containers = page_soup.findAll("div", {"class": "mag-box-container"})
+    containers = page_soup.find_all("li", {"class": "post-item"})
 
     fidelinfo_news = []
 
     for container in containers:
-        x = container.find_all_next(class_="post-title")
-        for y in x:
-            headline = y.getText().strip()  # print(headline)
-        x = container.find_all(class_="post-title")
-        for y in x:
-            address = y.a["href"]  # print(address)
-        x = container.find_all(class_="meta-author")
-        for y in x:
-            author = y.getText().strip()
-            # print(author)
-        x = container.find_all(class_="date")
-        for y in x:
-            date = y.getText().strip()  # print(date)
-        x = container.find_all(class_="post-thumb")
-        for y in x:
-            # print(image)# news_snip = container.find(class_ = "post-title").a["href"]
-            image = y.img["src"]
+        headline = container.find(class_="post-title").a.getText().strip()
+        image = container.a.img["src"]
+        date = container.find(class_="date meta-item").getText().strip()
+        author = container.find(class_="meta-author meta-item").a.getText().strip()
+        address = container.a["href"]
+        read_address = requests.get(address)
+        page_html = read_address.text
+        page_soup = soup(page_html, "html.parser")
+        post = str(page_soup.body.find(class_="entry-content entry clearfix"))
 
-        x = container.find_all(class_="post-item")
-        for y in x:
-            fetch_read_address = y.a["href"]  # print(fetch_address)
-        read_address = requests.get(fetch_read_address)  # print(read_address)
+        cut_from = post.find("::before")
+        cut_to = post.find("<p>&nbsp;")
+        news_read = soup(post[cut_from+1:cut_to],"html.parser")
 
-        page_soup = soup(read_address.content,
-                         "html.parser")  # print(page_soup)
-        x = page_soup.body.find_all(class_="post")
-        for y in x:
-            post = str(y)  # print(post)
-            cut_from = post.find("</header>")
-            cut_to = post.find("<p>&nbsp;</p>")
-            news_read = soup(post[cut_from + 1: cut_to], "html.parser")
-            print(news_read)
-
-            row = {
-                'source': str(source),
-                'headline': str(headline),
-                'address': str(address),
-                'author': str(author),
-                'date': str(date),
-                'image': str(image),
-                'news_read': str(news_read)
-            }
-            fidelinfo_news.append(row)
+        row = {
+            "source": str(source),
+            "headline": str(headline),
+            "address": str(address),
+            "author": str(author),
+            "date": str(date),
+            "image": str(image),
+            "news_read": str(news_read)
+        }
+        fidelinfo_news.append(row)
 
     return fidelinfo_news
+
+
+def scrape_freshinsight():
+    news_url = "https://www.freshinsight.tv/"
+    source = "Fresh Insight TV"
+    newsClient = requests.get(news_url)
+    page_html = newsClient.text
+    page_soup = soup(page_html, "html.parser")
+    containers = page_soup.find_all("div", {"class": "featured-inner"})
+
+    freshinsight_news = []
+
+    for container in containers:
+        # headline = container.div.h3.a.getText().strip()
+        headline = container.find(class_="rcp-title").getText().strip()
+        image = container.find(class_="rcp-title").a["style"]
+        date = container.find(class_="featured-date").getText().strip()
+        author = container.find(class_="featured-author idel").getText().strip()
+        address = container.div.h3.a["href"]
+        read_address = requests.get(address)
+        page_html = read_address.text
+        page_soup = soup(page_html, "html.parser")
+        post = str(page_soup.body.find(class_="post-body entry-content"))
+
+        cut_from = post.find("<article>")
+        cut_to = post.find("</article>")
+        news_read = soup(post[cut_from+1:cut_to],"html.parser")
+
+        row = {
+            "source": str(source),
+            "headline": str(headline),
+            "address": str(address),
+            "author": str(author),
+            "date": str(date),
+            "image": str(image),
+            "news_read": str(news_read)
+        }
+        freshinsight_news.append(row)
+
+    return freshinsight_news
+
+
 
 # def scrape_royalfm():
 # news_url = "http://royalfm.net/category/news/local_news/"
@@ -343,27 +284,27 @@ def scrape_fidelinfo():
 # page_html = newsClient.text
 # newsClient.close()
 # page_soup = soup(page_html, "html.parser")
-# containers = page_soup.findAll("div", {"class": "category-local_news"})
+# containers = page_soup.find_all("div", {"class": "category-local_news"})
 
 # royal_news = []
 
 # for container in containers:
 # headline = container.div.a["title"]
 # address = container.div.a["href"]
-# author = container.find(class_ = 'tm_catpost_item_1').getText().strip()
-# date = container.find(class_ = 'tm_catpost_item_3').getText().strip()
-# image = container.find(class_ = 'tm_cat_image').a.img['src']
+# author = container.find(class_ = "tm_catpost_item_1").getText().strip()
+# date = container.find(class_ = "tm_catpost_item_3").getText().strip()
+# image = container.find(class_ = "tm_cat_image").a.img["src"]
 
-# fetch_read_address = container.find(class_ = 'tmpost-readmore').a['href']# read_address = requests.get(fetch_read_address)# page_soup = soup(read_address.content, "html.parser")# post = str(page_soup.body.find(class_ = "post"))# cut_from = post.find('>')# cut_to = post.find('<!-- Facebook Comm')# news_read = soup(post[cut_from + 1: cut_to], "html.parser")
+# fetch_read_address = container.find(class_ = "tmpost-readmore").a["href"]# read_address = requests.get(fetch_read_address)# page_soup = soup(read_address.content, "html.parser")# post = str(page_soup.body.find(class_ = "post"))# cut_from = post.find(">")# cut_to = post.find("<!-- Facebook Comm")# news_read = soup(post[cut_from + 1: cut_to], "html.parser")
 
 # row = {
-  # 'source': str(source),
-  # 'headline': str(headline),
-  # 'address': str(address),
-  # 'author': str(author),
-  # 'date': str(date),
-  # 'image': str(image),
-  #'news_read': str(news_read)#
+  # "source": str(source),
+  # "headline": str(headline),
+  # "address": str(address),
+  # "author": str(author),
+  # "date": str(date),
+  # "image": str(image),
+  #"news_read": str(news_read)#
 # }
 # royal_news.append(row)
 

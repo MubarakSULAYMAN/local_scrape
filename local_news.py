@@ -236,45 +236,44 @@ def scrape_fidelinfo():
     return fidelinfo_news
 
 
-def scrape_freshinsight():
-    news_url = "https://www.freshinsight.tv/"
-    source = "Fresh Insight TV"
-    newsClient = requests.get(news_url)
-    page_html = newsClient.text
-    page_soup = soup(page_html, "html.parser")
-    containers = page_soup.find_all("div", {"class": "featured-inner"})
+# def scrape_freshinsight():
+#     news_url = "https://www.freshinsight.tv/"
+#     source = "Fresh Insight TV"
+#     newsClient = requests.get(news_url)
+#     page_html = newsClient.text
+#     page_soup = soup(page_html, "html.parser")
+#     containers = page_soup.find_all("div", {"class": "featured-inner"})
 
-    freshinsight_news = []
+#     freshinsight_news = []
 
-    for container in containers:
-        # headline = container.div.h3.a.getText().strip()
-        headline = container.find(class_="rcp-title").getText().strip()
-        image = container.find(class_="rcp-title").a["style"]
-        date = container.find(class_="featured-date").getText().strip()
-        author = container.find(class_="featured-author idel").getText().strip()
-        address = container.div.h3.a["href"]
-        read_address = requests.get(address)
-        page_html = read_address.text
-        page_soup = soup(page_html, "html.parser")
-        post = str(page_soup.body.find(class_="post-body entry-content"))
+#     for container in containers:
+#         # headline = container.div.h3.a.getText().strip()
+#         headline = container.find(class_="rcp-title").getText().strip()
+#         image = container.find(class_="rcp-title").a["style"]
+#         date = container.find(class_="featured-date").getText().strip()
+#         author = container.find(class_="featured-author idel").getText().strip()
+#         address = container.div.h3.a["href"]
+#         read_address = requests.get(address)
+#         page_html = read_address.text
+#         page_soup = soup(page_html, "html.parser")
+#         post = str(page_soup.body.find(class_="post-body entry-content"))
 
-        cut_from = post.find("<article>")
-        cut_to = post.find("</article>")
-        news_read = soup(post[cut_from+1:cut_to],"html.parser")
+#         cut_from = post.find("<article>")
+#         cut_to = post.find("</article>")
+#         news_read = soup(post[cut_from+1:cut_to],"html.parser")
 
-        row = {
-            "source": str(source),
-            "headline": str(headline),
-            "address": str(address),
-            "author": str(author),
-            "date": str(date),
-            "image": str(image),
-            "news_read": str(news_read)
-        }
-        freshinsight_news.append(row)
+#         row = {
+#             "source": str(source),
+#             "headline": str(headline),
+#             "address": str(address),
+#             "author": str(author),
+#             "date": str(date),
+#             "image": str(image),
+#             "news_read": str(news_read)
+#         }
+#         freshinsight_news.append(row)
 
-    return freshinsight_news
-
+#     return freshinsight_news
 
 
 # def scrape_royalfm():

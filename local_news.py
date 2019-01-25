@@ -1,14 +1,16 @@
 import requests
 from bs4 import BeautifulSoup as soup
 
+
 def scrape_legit():
 
     news_url = "https://www.legit.ng/tag/kwara-state-news-today.html"
-    source = "Naij.com > Legit.ng" 
+    source = "Naij.com > Legit.ng"
     newsClient = requests.get(news_url)
     page_html = newsClient.text
     page_soup = soup(page_html, "html.parser")
-    containers = page_soup.find_all("article", {"class" : "c-article-card-no-border"})
+    containers = page_soup.find_all(
+        "article", {"class": "c-article-card-no-border"})
 
     legit_news = []
 
@@ -21,24 +23,26 @@ def scrape_legit():
         page_html = read_address.text
         page_soup = soup(page_html, "html.parser")
         # page_soup = soup(read_address.content, "html.parser")
-        author = str(page_soup.body.find(class_="c-article-info__author").getText().strip())
-        post = str(page_soup.body.find(class_="l-article__body c-article__body"))
-            
+        author = str(page_soup.body.find(
+            class_="c-article-info__author").getText().strip())
+        post = str(page_soup.body.find(
+            class_="l-article__body c-article__body"))
+
         # cut_from = post.find(">")
         # cut_to = post.find("<div class=")
         # news_read = soup(post[cut_from+1:cut_to],"html.parser")
         news_read = soup(post, "html.parser")
-          
+
         row = {"source": str(source),
-            "headline": str(headline),
-            "address": str(address),
-            "date": str(date),
-            "image": str(image),
-            "author": str(author),
-            "news_read": str(news_read)
-            }
+               "headline": str(headline),
+               "address": str(address),
+               "date": str(date),
+               "image": str(image),
+               "author": str(author),
+               "news_read": str(news_read)
+               }
         legit_news.append(row)
-                
+
     return legit_news
 
 
@@ -65,13 +69,13 @@ def scrape_kwaralefro():
         news_read = soup(post, "html.parser")
 
         row = {
-        "source": str(source),
-        "headline": str(headline),
-        "address": str(address),
-        "author": str(author),
-        "date": str(date),
-        "image": str(image),
-        "news_read": str(news_read)
+            "source": str(source),
+            "headline": str(headline),
+            "address": str(address),
+            "author": str(author),
+            "date": str(date),
+            "image": str(image),
+            "news_read": str(news_read)
         }
         kwaralefro_news.append(row)
 
@@ -88,14 +92,17 @@ def scrape_todayng():
 
     today_ng_news = []
     for container in containers:
-        headline = container.find(class_="entry-title td-module-title").getText().strip()
+        headline = container.find(
+            class_="entry-title td-module-title").getText().strip()
         image = container.div.a.img["src"]
         address = container.div.a["href"]
         read_address = requests.get(address)
         page_html = read_address.text
         page_soup = soup(page_html, "html.parser")
-        date = str(page_soup.body.find(class_="entry-date updated td-module-date").getText().strip())
-        author = str(page_soup.body.find(class_="td-post-author-name").getText().strip())
+        date = str(page_soup.body.find(
+            class_="entry-date updated td-module-date").getText().strip())
+        author = str(page_soup.body.find(
+            class_="td-post-author-name").getText().strip())
         post = str(page_soup.body.find(class_="td-post-content"))
 
         # cut_from = post.find("</div>")
@@ -128,7 +135,8 @@ def scrape_kwaragist():
     kwaragist_news = []
 
     for container in containers:
-        headline = container.find(class_="mvp-main-blog-text left relative").a.getText().strip()
+        headline = container.find(
+            class_="mvp-main-blog-text left relative").a.getText().strip()
         image = container.div.a.div.img["src"]
         author = container.find(class_="mvp-blog-author").getText().strip()
         date = container.find(class_="mvp-blog-date").getText().strip()
@@ -136,7 +144,8 @@ def scrape_kwaragist():
         read_address = requests.get(address)
         page_html = read_address.text
         page_soup = soup(page_html, "html.parser")
-        post = str(page_soup.body.find(class_="theiaPostSlider_preloadedSlide"))
+        post = str(page_soup.body.find(
+            class_="theiaPostSlider_preloadedSlide"))
 
         # cut_from = post.find("</div>")
         # cut_to = post.find("<div class=")
@@ -184,13 +193,13 @@ def scrape_theinformant247():
         news_read = soup(post, "html.parser")
 
         row = {
-        "source": str(source),
-        "headline": str(headline),
-        "address": str(address),
-        "author": str(author),
-        "date": str(date),
-        "image": str(image),
-        "news_read": str(news_read)
+            "source": str(source),
+            "headline": str(headline),
+            "address": str(address),
+            "author": str(author),
+            "date": str(date),
+            "image": str(image),
+            "news_read": str(news_read)
         }
         theinformant247_news.append(row)
 
@@ -211,7 +220,8 @@ def scrape_fidelinfo():
         headline = container.find(class_="post-title").a.getText().strip()
         image = container.a.img["src"]
         date = container.find(class_="date meta-item").getText().strip()
-        author = container.find(class_="meta-author meta-item").a.getText().strip()
+        author = container.find(
+            class_="meta-author meta-item").a.getText().strip()
         address = container.a["href"]
         read_address = requests.get(address)
         page_html = read_address.text
@@ -220,7 +230,7 @@ def scrape_fidelinfo():
 
         cut_from = post.find("::before")
         cut_to = post.find("<p>&nbsp;")
-        news_read = soup(post[cut_from+1:cut_to],"html.parser")
+        news_read = soup(post[cut_from+1:cut_to], "html.parser")
 
         row = {
             "source": str(source),

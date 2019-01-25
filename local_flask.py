@@ -9,17 +9,17 @@ app = Flask(__name__)
 # app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
-@cross_origin()
+# @cross_origin()
 def  lost():
     return "Lost? What are you looking for."
 
 @app.route('/api')
-@cross_origin()
+# @cross_origin()
 def  apis():
     return "Nothing here for you..."
 
 @app.route('/api/news')
-@cross_origin()
+# @cross_origin()
 def newsIndex():
 
     data1 = scrape_legit()

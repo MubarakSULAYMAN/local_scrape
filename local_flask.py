@@ -5,16 +5,17 @@ from local_news import scrape_legit, scrape_kwaralefro, scrape_todayng, scrape_k
 # from local_news import scrape_legit, scrape_kwaralefro, scrape_todayng, scrape_kwaragist, scrape_theinformant247, scrape_fidelinfo, scrape_freshinsight
 
 app = Flask(__name__)
+cors = CORS(app)
 CORS(app)
 
 @app.route('/')
 @cross_origin()
-def  lost():
+def lost():
     return "Lost? What are you looking for."
 
 @app.route('/api')
 @cross_origin()
-def  apis():
+def apis():
     return "Nothing here for you..."
 
 @app.route('/api/news')

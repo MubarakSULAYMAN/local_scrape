@@ -45,5 +45,5 @@ def newsIndex():
     return response
 
 
-# if __name__ == "__main__":
-#     app.run(debug = True, port = 9000)
+if __name__ == "__main__":
+    app.run(debug = True, port = 9000)

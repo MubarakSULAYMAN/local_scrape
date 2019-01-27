@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as soup
 
+
 def scrape_legit():
 
     news_url = "https://www.legit.ng/tag/kwara-state-news-today.html"
@@ -21,13 +22,13 @@ def scrape_legit():
         page_html = read_address.text
         page_soup = soup(page_html, "html.parser")
         # page_soup = soup(read_address.content, "html.parser")
-        author = str(page_soup.body.find(class_="c-article-info__author").getText().strip())
+#         author = str(page_soup.body.find(class_="c-article-info__author").getText().strip())
         post = str(page_soup.body.find(class_="l-article__body c-article__body"))
             
-        read_also = str(page_soup.body.find(target_="_blank"))
-        strip1 = read_also.find("<")
-        strip2 = read_also.find("<p class=")
-        strip3 = soup(post[strip1+1:strip2],"html.parser")
+#         read_also = str(page_soup.body.find(target_="_blank"))
+#         strip1 = read_also.find("<")
+#         strip2 = read_also.find("<p class=")
+#         strip3 = soup(post[strip1+1:strip2],"html.parser")
         
         # cut_from = post.find(">")
         # cut_to = post.find("<div class=")
@@ -39,7 +40,7 @@ def scrape_legit():
             "address": str(address),
             "date": str(date),
             "image": str(image),
-            "author": str(author),
+#             "author": str(author),
             "news_read": str(news_read)
             }
         legit_news.append(row)

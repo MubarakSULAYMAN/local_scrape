@@ -33,7 +33,7 @@ def newsIndex():
     # removed due to old news
     # data8 = scrape_royalfm()
     
-    data= data1 + data2
+    data = data1 + data2
     # data= data1 + data2 + data3 + data4 + data5 + data6 + data7 
 
     response = app.response_class(
@@ -44,5 +44,5 @@ def newsIndex():
     return response
 
 
-if __name__ == "__main__":
-    app.run(debug = True, port = 9000)
+# if __name__ == "__main__":
+#     app.run(debug = True, port = 9000)

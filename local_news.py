@@ -33,7 +33,7 @@ def scrape_legit():
         a_tag = page_soup.body.find(class_="l-article__body c-article__body").a["href"]
         new_post = post.replace(a_tag, "\n")
 
-        news_read = soup(u, "html.parser")
+        news_read = soup(new_post, "html.parser")
         
         row = {"source": str(source),
             "headline": str(headline),

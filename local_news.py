@@ -17,7 +17,7 @@ def scrape_legit():
         read_address = requests.get(address)
         page_html = read_address.text
         page_soup = soup(page_html, "html.parser")
-        author = str(page_soup.body.find(class_="c-article-info__author").getText().strip())
+#         author = str(page_soup.body.find(class_="c-article-info__author").getText().strip())
         post = str(page_soup.body.find(class_="l-article__body c-article__body"))
             
         a = "READ ALSO:"
@@ -40,14 +40,14 @@ def scrape_legit():
         cut_4 = s
         t = cut_4.replace(e, "\n")
 
-        news_read = soup(t, "html.parser")
+        news_read = soup(s, "html.parser")
           
         row = {"source": str(source),
             "headline": str(headline),
             "address": str(address),
             "date": str(date),
             "image": str(image),
-            "author": str(author),
+#             "author": str(author),
             "news_read": str(news_read)
             }
         legit_news.append(row)

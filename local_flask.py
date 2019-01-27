@@ -5,8 +5,8 @@ from local_news import scrape_legit
 # from local_news import scrape_legit, scrape_kwaralefro, scrape_todayng, scrape_kwaragist, scrape_theinformant247, scrape_fidelinfo, scrape_freshinsight
 
 app = Flask(__name__)
-cors = CORS(app)
-# CORS(app)
+# cors = CORS(app)
+CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')

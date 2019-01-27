@@ -44,7 +44,11 @@ def scrape_legit():
         cut_4 = s
         t = cut_4.replace(e, "\n")
 
-        news_read = soup(t, "html.parser")
+        x = page_soup.body.find(class_="embed-container").get_text().strip()
+        y = t
+        z = y.replace(x, "\n")
+
+        news_read = soup(z, "html.parser")
           
         row = {"source": str(source),
             "headline": str(headline),

@@ -30,7 +30,10 @@ def scrape_legit():
         for weed in weeds:
             post = post.replace(weed, "\n")
 
-        news_read = soup(post, "html.parser")
+        t = re.search("<a>", "</a>")
+        u = post.strip(t)
+
+        news_read = soup(u, "html.parser")
         
         row = {"source": str(source),
             "headline": str(headline),

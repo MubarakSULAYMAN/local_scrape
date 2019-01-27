@@ -24,32 +24,14 @@ def scrape_legit():
         author = str(page_soup.body.find(class_="c-article-info__author").getText().strip())
         post = str(page_soup.body.find(class_="l-article__body c-article__body"))
             
-        a = "READ ALSO:"
-        cut_1 = post
-        p = cut_1.replace(a, "\n")
+        weeds = ["READ ALSO:", "NAIJ.com upgrades to Legit.ng: a letter from our Editor-in-Chief Bayo Olupohunda",
+                 "PAY ATTENTION:", "Download our mobile app to enjoy the latest news updates",  "<a>", "</a>"]
+        
+        for weed in weeds:
+            post = post.replace(weed, "\n")
 
-        b = "NAIJ.com upgrades to Legit.ng: a letter from our Editor-in-Chief Bayo Olupohunda"
-        cut_2 = p
-        q = cut_2.replace(b, "\n")
-
-        c = "PAY ATTENTION:"
-        cut_3 = q
-        r = cut_3.replace(c, "\n")
-
-        d = "Download our mobile app to enjoy the latest news updates"
-        cut_4 = r
-        s = cut_4.replace(d, "\n")
-
-        e = "<a"
-        cut_4 = s
-        t = cut_4.replace(e, "\n")
-
-        e = str(page_soup.body.find(class_="embed-container"))
-        cut_5 = s
-        t = cut_5.replace(e, "\n")
-
-        news_read = soup(t, "html.parser")
-  
+        news_read = soup(post, "html.parser")
+        
         row = {"source": str(source),
             "headline": str(headline),
             "address": str(address),

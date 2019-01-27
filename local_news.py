@@ -5,12 +5,11 @@ from bs4 import BeautifulSoup as soup
 def scrape_legit():
 
     news_url = "https://www.legit.ng/tag/kwara-state-news-today.html"
-    source = "Naij.com > Legit.ng"
+    source = "Naij.com > Legit.ng" 
     newsClient = requests.get(news_url)
     page_html = newsClient.text
     page_soup = soup(page_html, "html.parser")
-    containers = page_soup.find_all(
-        "article", {"class": "c-article-card-no-border"})
+    containers = page_soup.find_all("article", {"class" : "c-article-card-no-border"})
 
     legit_news = []
 
@@ -22,28 +21,43 @@ def scrape_legit():
         read_address = requests.get(address)
         page_html = read_address.text
         page_soup = soup(page_html, "html.parser")
-        # page_soup = soup(read_address.content, "html.parser")
-        author = str(page_soup.body.find(
-            class_="c-article-info__author").getText().strip())
-        post = str(page_soup.body.find(
-            class_="l-article__body c-article__body"))
+        author = str(page_soup.body.find(class_="c-article-info__author").getText().strip())
+        post = str(page_soup.body.find(class_="l-article__body c-article__body"))
+            
+        a = "READ ALSO:"
+        cut_1 = post
+        p = cut_1.replace(a, "\n")
 
-        # cut_from = post.find(">")
-        # cut_to = post.find("<div class=")
-        # news_read = soup(post[cut_from+1:cut_to],"html.parser")
-        news_read = soup(post, "html.parser")
+        b = "NAIJ.com upgrades to Legit.ng: a letter from our Editor-in-Chief Bayo Olupohunda"
+        cut_2 = p
+        q = cut_2.replace(b, "\n")
 
+        c = "PAY ATTENTION:"
+        cut_3 = q
+        r = cut_3.replace(c, "\n")
+
+        d = "Download our mobile app to enjoy the latest news updates"
+        cut_4 = r
+        s = cut_4.replace(d, "\n")
+
+        e = "<a"
+        cut_4 = s
+        t = cut_4.replace(e, "\n")
+
+        news_read = soup(t, "html.parser")
+          
         row = {"source": str(source),
-               "headline": str(headline),
-               "address": str(address),
-               "date": str(date),
-               "image": str(image),
-               "author": str(author),
-               "news_read": str(news_read)
-               }
+            "headline": str(headline),
+            "address": str(address),
+            "date": str(date),
+            "image": str(image),
+            "author": str(author),
+            "news_read": str(news_read)
+            }
         legit_news.append(row)
-
+                
     return legit_news
+
 
 
 def scrape_kwaralefro():

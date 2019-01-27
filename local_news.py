@@ -82,3 +82,42 @@ def scrape_kwaralefro():
         kwaralefro_news.append(row)
 
     return kwaralefro_news
+
+
+def scrape_todayng():
+    news_url = "https://www.today.ng/topic/kwara"
+    source = "today.ng"
+    newsClient = requests.get(news_url)
+    page_html = newsClient.text
+    page_soup = soup(page_html, "html.parser")
+    containers = page_soup.find_all("div", {"class": "td_module_11"})
+
+    today_ng_news = []
+    for container in containers:
+        headline = container.find(class_="entry-title td-module-title").get_text().strip()
+        image = container.div.a.img["src"]
+        address = container.div.a["href"]
+        read_address = requests.get(address)
+        page_html = read_address.text
+        page_soup = soup(page_html, "html.parser")
+        date = str(page_soup.body.find(class_="entry-date updated td-module-date").get_text().strip())
+        author = str(page_soup.body.find(class_="td-post-author-name").get_text().strip())
+        post = str(page_soup.body.find(class_="td-post-content"))
+
+        # cut_from = post.find("</div>")
+        # cut_to = post.find("<div style=")
+        # news_read = soup(post[cut_from+1:cut_to],"html.parser")
+        news_read = soup(post, "html.parser")
+
+        row = {
+            "source": str(source),
+            "headline": str(headline),
+            "address": str(address),
+            "author": str(author),
+            "date": str(date),
+            "image": str(image),
+            "news_read": str(news_read)
+        }
+        today_ng_news.append(row)
+
+    return today_ng_news

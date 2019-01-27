@@ -46,3 +46,39 @@ def scrape_legit():
         legit_news.append(row)
                 
     return legit_news
+
+
+def scrape_kwaralefro():
+    news_url = "http://www.kwaralefro.com"
+    source = "Kwara Legacy Frontier"
+    newsClient = requests.get(news_url)
+    page_html = newsClient.text
+    page_soup = soup(page_html, "html.parser")
+    containers = page_soup.find_all("div", {"class": "content-excerpt"})
+
+    kwaralefro_news = []
+
+    for container in containers:
+        headline = container.h1.a.get_text().strip()
+        date = container.div.span.a.time.get_text().strip()
+        image = container.a.img["src"]
+        address = container.div.p.a["href"]
+        read_address = requests.get(address)
+        page_html = read_address.text
+        page_soup = soup(page_html, "html.parser")
+        author = container.span.span.a.get_text().strip()
+        post = str(page_soup.body.find(class_="entry clearfix"))
+        news_read = soup(post, "html.parser")
+
+        row = {
+        "source": str(source),
+        "headline": str(headline),
+        "address": str(address),
+        "author": str(author),
+        "date": str(date),
+        "image": str(image),
+        "news_read": str(news_read)
+        }
+        kwaralefro_news.append(row)
+
+    return kwaralefro_news

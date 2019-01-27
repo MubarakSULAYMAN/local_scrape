@@ -21,7 +21,7 @@ def scrape_legit():
         read_address = requests.get(address)
         page_html = read_address.text
         page_soup = soup(page_html, "html.parser")
-        author = str(page_soup.body.find(class_="c-article-info__author").getText().strip())
+#         author = str(page_soup.body.find(class_="c-article-info__author").getText().strip())
         post = str(page_soup.body.find(class_="l-article__body c-article__body"))
             
         a = "READ ALSO:"
@@ -51,13 +51,12 @@ def scrape_legit():
             "address": str(address),
             "date": str(date),
             "image": str(image),
-            "author": str(author),
+#             "author": str(author),
             "news_read": str(news_read)
             }
         legit_news.append(row)
                 
     return legit_news
-
 
 
 def scrape_kwaralefro():

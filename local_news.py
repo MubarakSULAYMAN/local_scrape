@@ -103,10 +103,13 @@ def scrape_todayng():
         date = str(page_soup.body.find(class_="entry-date updated td-module-date").get_text().strip())
         author = str(page_soup.body.find(class_="td-post-author-name").get_text().strip())
         post = str(page_soup.body.find(class_="td-post-content"))
+        weed = str(page_soup.body.find(style_="float:none;margin:0px;").get_text().strip())
+        post = post.replace(weed, "\n")
 
         # cut_from = post.find("</div>")
         # cut_to = post.find("<div style=")
         # news_read = soup(post[cut_from+1:cut_to],"html.parser")
+        
         news_read = soup(post, "html.parser")
 
         row = {

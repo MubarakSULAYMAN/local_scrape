@@ -48,7 +48,7 @@ def scrape_legit():
     return legit_news
 
 
-def scrape_kwaralefro():
+# def scrape_kwaralefro():
 #     news_url = "http://www.kwaralefro.com"
 #     source = "Kwara Legacy Frontier"
 #     newsClient = requests.get(news_url)
@@ -81,10 +81,10 @@ def scrape_kwaralefro():
 #         }
 #         kwaralefro_news.append(row)
 
-    return kwaralefro_news
+#     return kwaralefro_news
 
 
-def scrape_todayng():
+# def scrape_todayng():
 #     news_url = "https://www.today.ng/topic/kwara"
 #     source = "today.ng"
 #     newsClient = requests.get(news_url)
@@ -127,10 +127,10 @@ def scrape_todayng():
 #         }
 #         today_ng_news.append(row)
 
-    return today_ng_news
+#     return today_ng_news
 
 
-def scrape_kwaragist():
+# def scrape_kwaragist():
 #     news_url = "https://kwaragist.com"
 #     source = "Kwara Gist"
 #     newsClient = requests.get(news_url)
@@ -167,10 +167,10 @@ def scrape_kwaragist():
 #         }
 #         kwaragist_news.append(row)
 
-    return kwaragist_news
+#     return kwaragist_news
 
 
-def scrape_theinformant247():
+# def scrape_theinformant247():
 #     news_url = "http://www.theinformant247.com"
 #     source = "Informant 247"
 #     newsClient = requests.get(news_url)
@@ -207,10 +207,10 @@ def scrape_theinformant247():
 #         }
 #         theinformant247_news.append(row)
 
-    return theinformant247_news
+#     return theinformant247_news
 
 
-def scrape_fidelinfo():
+# def scrape_fidelinfo():
 #     news_url = "https://www.fidelinfo.com/category/news/"
 #     source = "Fidel Info"
 #     newsClient = requests.get(news_url)
@@ -246,10 +246,10 @@ def scrape_fidelinfo():
 #         }
 #         fidelinfo_news.append(row)
 
-    return fidelinfo_news
+#     return fidelinfo_news
 
 
-def scrape_freshinsight():
+# def scrape_freshinsight():
 #     news_url = "https://www.freshinsight.tv/"
 #     source = "Fresh Insight TV"
 #     newsClient = requests.get(news_url)
@@ -286,7 +286,7 @@ def scrape_freshinsight():
 #         }
 #         freshinsight_news.append(row)
 
-    return freshinsight_news
+#     return freshinsight_news
 
 
 

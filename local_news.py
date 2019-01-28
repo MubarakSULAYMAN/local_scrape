@@ -106,13 +106,15 @@ def scrape_todayng():
         weed = str(page_soup.body.find(style_="float:none;margin:0px;").get_text().strip())
         post = post.replace(weed, "\n")
 
-        cut_from = post.find('<div style="float:none;margin:0px;">')
-        cut_to = post.find("<footer")
-        weed = str(soup(post[cut_from-1:cut_to-1],"html.parser"))
+#         cut_from = post.find('<div style="float:none;margin:0px;">')
+#         cut_to = post.find("<footer")
+#         weed = str(soup(post[cut_from-1:cut_to-1],"html.parser"))
 
-        new_post = post.replace(weed, "\n")
+#         new_post = post.replace(weed, "\n")
 
-        news_read = soup(new_post, "html.parser")
+#         news_read = soup(new_post, "html.parser")
+
+        news_read = soup(post, "html.parser")
 
         row = {
             "source": str(source),

@@ -30,13 +30,13 @@ def scrape_legit():
         for weed in weeds:
             post = post.replace(weed, "\n")
 
-        cut_from = post.find(". We have upgraded to serve you better.")
-        cut_to = post.find("Source: ")
-        weed = str(soup(post[cut_from-70:cut_to+30], "html.parser"))
+        # x = d4.find('<div class="embed-container"')
+        start = post.find('<a href="https://www.youtube.com')
+        end = start+post[start+10:].find('</a>')
+        start, end
+        final = post[0:start-197]
 
-        new_post = post.replace(weed, "\n")
-
-        news_read = soup(new_post, "html.parser")
+        news_read = soup(final, "html.parser")
 
         row = {"source": str(source),
             "headline": str(headline),

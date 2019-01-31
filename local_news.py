@@ -25,13 +25,13 @@ def scrape_legit():
         post = str(page_soup.body.find(class_="l-article__body c-article__body"))
 
         weeds = ["READ ALSO:", "NAIJ.com upgrades to Legit.ng: a letter from our Editor-in-Chief Bayo Olupohunda", 
-        "PAY ATTENTION:", "Download our mobile app to enjoy the latest news updates", "PAY ATTENTION: ", 
+                 "PAY ATTENTION:", "Download our mobile app to enjoy the latest news updates", "PAY ATTENTION: ", 
                  "Access your favourite news site Legit.ng instantly in 3 simple steps", "Disclaimer: ", 
                  "The views and opinions expressed here are those of the author and do not necessarily reflect the official policy or position of", 
-                "Your own opinion articles are welcome at info@corp.legit.ng— drop an email telling us what you want to write about and why. More details in ",
-                "Legit.ng’s step-by-step guide for guest contributors. ", "We’re ready to trade your news for our money: submit news and photo reports from your area using our Citizen Journalism App. ",
-                "Contact us if you have any feedback, suggestions, complaints or compliments. We are also available on ", "Twitter.", "Legit.tv", 
-                "Install our latest app for Android, read best news on Nigeria’s", "#1 news app"]
+                 "Your own opinion articles are welcome at info@corp.legit.ng— drop an email telling us what you want to write about and why. More details in ",
+                 "Legit.ng’s step-by-step guide for guest contributors. ", "We’re ready to trade your news for our money: submit news and photo reports from your area using our Citizen Journalism App. ",
+                 "Contact us if you have any feedback, suggestions, complaints or compliments. We are also available on ", "Twitter.", "Legit.tv", 
+                 "Install our latest app for Android, read best news on Nigeria’s", "#1 news app"]
         for weed in weeds:
             post = post.replace(weed, "")
 

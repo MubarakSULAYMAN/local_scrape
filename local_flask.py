@@ -24,7 +24,7 @@ def newsIndex():
     data1 = scrape_legit()
     data2 = scrape_kwaralefro()
     data3 = scrape_todayng()
-    data4= scrape_kwaragist()
+    data4 = scrape_kwaragist()
     data5 = scrape_theinformant247()
     data6 = scrape_fidelinfo()
     data7 = scrape_freshinsight()

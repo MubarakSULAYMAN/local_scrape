@@ -1,9 +1,7 @@
 from flask import Flask, json, jsonify, request
 from flask_cors import CORS, cross_origin
 import local_news
-from local_news import (scrape_fidelinfo, scrape_freshinsight,
-                        scrape_kwaragist, scrape_kwaralefro, scrape_legit,
-                        scrape_theinformant247, scrape_todayng)
+from local_news import (scrape_fidelinfo, scrape_freshinsight, scrape_kwaragist, scrape_kwaralefro, scrape_legit, scrape_theinformant247, scrape_todayng)
 
 app = Flask(__name__)
 CORS(app)

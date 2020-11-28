@@ -36,7 +36,7 @@ def newsIndex():
     # removed due to old news
     # data8 = scrape_royalfm()
     
-    data = data1 
+    data = data5 
 #     + data5 + data6 + data7 
 #     + data2
 #     + data3
